@@ -3,17 +3,45 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'components/index.dart';
 import 'components/signin.dart';
+
+/*void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  // await auth.signOut();
+  await createUserAc();
+
+  runApp(MaterialApp(home: Scaffold(body: TryFirestore())));
+}*/
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  // await auth.signOut();
- \ await createUserAc();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  auth.authStateChanges().listen((User user) {
+    if (user == null){
+      print("User is currently signed out!");
+    }else{
+      print("User is signed In !");
+    }
+  });
+//await createUser();
 
-  runApp(MaterialApp(home: Scaffold(body: TryFirestore())));
+await auth.signOut();
+ 
+  runApp(MaterialApp(
+    home: Scaffold(
+      body: Index(
+      ),
+    ),
+    builder: EasyLoading.init(),
+  ));
 }
 
 class TryFirestore extends StatefulWidget {
