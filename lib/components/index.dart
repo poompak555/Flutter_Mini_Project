@@ -36,11 +36,11 @@ class _IndexState extends State<Index> {
  
   Widget build(BuildContext context) {
     return Container(
-      decoration: new BoxDecoration(color: Colors.cyan[100]),
+      decoration: new BoxDecoration(color: Colors.grey[850]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
+        /*  Center(
             child: StreamBuilder<User>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snap) {
@@ -48,37 +48,46 @@ class _IndexState extends State<Index> {
                 if (user != null) {
                   return Text(
                     'Signed-in with ${user.email}',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.white),
                   );
                 }
                 return Text('Sign-Out',style: TextStyle(color: Colors.black),);
               },
             ),
-          ),
+          ),*/
           Container(
             padding: EdgeInsets.all(12),
             child: Column(
               children: [
                 TextField(
-                 style: TextStyle(color: Colors.black),
+                 style: TextStyle(color: Colors.white),
                   onChanged: (mail) => email = mail,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                 decoration: InputDecoration( 
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
                           borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                       labelText: 'email',
-                      labelStyle: TextStyle(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
                 Text(""),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (pass) => password = pass,
                   obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                  decoration: InputDecoration( 
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
+                          borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                       labelText: 'password',
-                      labelStyle: TextStyle(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.white)),
                 )
               ],
             ),
@@ -92,7 +101,7 @@ class _IndexState extends State<Index> {
                   children: [
                     Text(
                       "Forgot Password",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white),
                     )
                   ],
                 )
@@ -105,7 +114,7 @@ class _IndexState extends State<Index> {
              buildButtonSignIn(),
              //buildButtonSignOut(),
              buildButtonCreate(),
-             buildButtonReadData(),
+           //  buildButtonReadData(),
             // buildButtonCreateData(),
             // buildButtonUpdateData(),
            ],
@@ -141,13 +150,20 @@ class _IndexState extends State<Index> {
         child: InkWell(
         child: Text("Sign in",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.black)),
+            style: TextStyle(fontSize: 18, color: Colors.white)),
             onTap: ()  {
              onClickSignIn();
             },
     ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.blue[300]),
+         decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30), 
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+              colors: [Colors.purple[700],Colors.orange[600]],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )
+            ),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
@@ -164,7 +180,14 @@ class _IndexState extends State<Index> {
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.blue[300]),
+            borderRadius: BorderRadius.circular(30), 
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+              colors: [Colors.purple[700],Colors.orange[600]],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )
+            ),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
@@ -175,13 +198,20 @@ class _IndexState extends State<Index> {
         child: InkWell(
         child: Text("Create User",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.black)),
+            style: TextStyle(fontSize: 18, color: Colors.white)),
             onTap: () async {
               await createUser();
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.blue[300]),
+            borderRadius: BorderRadius.circular(30), 
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+              colors: [Colors.orange[600],Colors.purple[700]],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )
+            ),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }

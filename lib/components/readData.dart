@@ -43,7 +43,7 @@ class _ViewDataState extends State<ViewData> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
+         /* Center(
             child: StreamBuilder<User>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snap) {
@@ -57,17 +57,29 @@ class _ViewDataState extends State<ViewData> {
                 return Text('Sign-Out',style: TextStyle(color: Colors.black),);
               },
             ),
-          ),
+          ),*/
           Container(
             padding: EdgeInsets.all(12),
-            child: Center(
+            child: Column(
               // padding: const EdgeInsets.all(8),
               
-            //  children: [
-              // child: SizedBox(
-                //  height: 100, // constrain height
+             children: [
+               TextField(
+                  style: TextStyle(color: Colors.black),
+                  onChanged: (doc) => doc_num = doc,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      labelText: 'Document ID',
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+                Text(""),
+                Center(
+                  //height: 100, // constrain height
                   child: RealtimeCollection(users: users,),
-             //   ),
+                ),
                 /*
                 TextField(
                   style: TextStyle(color: Colors.black),
@@ -117,7 +129,7 @@ class _ViewDataState extends State<ViewData> {
                  Text(""),
                 */
 
-             // ],
+              ],
             ),
           ),
           Container(
@@ -207,7 +219,14 @@ class _ViewDataState extends State<ViewData> {
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
+            borderRadius: BorderRadius.circular(30), 
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+              colors: [Colors.red,Colors.cyan],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )
+            ),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
@@ -331,7 +350,14 @@ class _ViewDataState extends State<ViewData> {
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+              colors: [Colors.red,Colors.cyan],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )
+            ),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
@@ -356,7 +382,14 @@ class _ViewDataState extends State<ViewData> {
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
+            borderRadius: BorderRadius.circular(30), 
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+              colors: [Colors.cyan,Colors.red],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )
+            ),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
