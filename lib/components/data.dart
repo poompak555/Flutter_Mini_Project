@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 
 class Data extends StatefulWidget {
@@ -37,7 +38,7 @@ class _DataState extends State<Data> {
  
   Widget build(BuildContext context) {
     return Container(
-      decoration: new BoxDecoration(color: Colors.pink[100]),
+      decoration: new BoxDecoration(color: HexColor("0f156d")),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -49,7 +50,7 @@ class _DataState extends State<Data> {
                 if (user != null) {
                   return Text(
                     'Signed-in with ${user.email}',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.white),
                   );
                 }
                 return Text('Sign-Out',style: TextStyle(color: Colors.black),);
@@ -61,49 +62,66 @@ class _DataState extends State<Data> {
             child: Column(
               children: [
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (doc) => doc_num = doc,
                   obscureText: false,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                     enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
+                          borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                       labelText: 'Document ID',
-                      labelStyle: TextStyle(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
                 Text(""),
                 TextField(
-                 style: TextStyle(color: Colors.black),
+                 style: TextStyle(color: Colors.white),
                   onChanged: (nam) => name = nam,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                     enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
                           borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                       labelText: 'doc_name',
-                      labelStyle: TextStyle(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
                 Text(""),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (doctype) => type = doctype,
                   obscureText: false,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
+                          borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                       labelText: 'Type',
-                      labelStyle: TextStyle(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
                 Text(""),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (dochp) => hp = dochp,
                   obscureText: false,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
+                          borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                       labelText: 'HP',
-                      labelStyle: TextStyle(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
                  Text(""),
                 
@@ -197,7 +215,11 @@ class _DataState extends State<Data> {
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
+            borderRadius: BorderRadius.circular(30),  gradient: new LinearGradient(
+              colors: [Colors.purple[700],Colors.orange[600]],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
@@ -225,13 +247,21 @@ class _DataState extends State<Data> {
         child: InkWell(
         child: Text("Create Data",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.white)),
+            style: TextStyle(fontSize: 18, 
+            color: Colors.white)
+            ),
             onTap: ()  {
              createData();
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
+            borderRadius: BorderRadius.circular(30), 
+             gradient: new LinearGradient(
+              colors: [Colors.purple[700],Colors.orange[600]],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )
+            ),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
@@ -244,11 +274,16 @@ class _DataState extends State<Data> {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18, color: Colors.white)),
             onTap: ()  {
-             UpdateData();
+             print(int.parse('$hp'));
+             this.UpdateData();
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
+            borderRadius: BorderRadius.circular(30),  gradient: new LinearGradient(
+              colors: [Colors.purple[700],Colors.orange[600]],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
@@ -293,19 +328,28 @@ class _DataState extends State<Data> {
     users
         
         .add({'name': '$name', 'type': '$type' , 'hp': int.parse('$hp') })
-        .then((value) => print('success'))
-        .catchError((e) => print(e));
+        .then((value) => EasyLoading.showSuccess("Create Data Success"))
+        .catchError((e) => EasyLoading.showInfo("Error"));
+  
   }
 
+
   void UpdateData() {
+    
+
+    if(int.parse('$hp') > 0){
+      
 
     final CollectionReference users =
               FirebaseFirestore.instance.collection('users');
           users
             .doc("$doc_num")
               .update({'hp': int.parse('$hp') , 'name': '$name', 'type': '$type'})
-              .then((value) => print('updated!'))
-              .catchError((e) => print('update error'));
+              .then((value) => EasyLoading.showSuccess("Update Data Success"))
+              .catchError((e) => EasyLoading.showInfo("Error"));
+    }
+    
+  
   }
  
  Container buildButtonReadData() {
@@ -320,7 +364,11 @@ class _DataState extends State<Data> {
             },
     ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
+            borderRadius: BorderRadius.circular(30),  gradient: new LinearGradient(
+              colors: [Colors.purple[700],Colors.orange[600]],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft
+              )),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }

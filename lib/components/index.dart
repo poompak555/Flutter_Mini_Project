@@ -7,6 +7,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:hexcolor/hexcolor.dart';
+
 
 
 class Index extends StatefulWidget {
@@ -36,7 +39,7 @@ class _IndexState extends State<Index> {
  
   Widget build(BuildContext context) {
     return Container(
-      decoration: new BoxDecoration(color: Colors.grey[850]),
+      decoration: new BoxDecoration(color: HexColor("0f156d")),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -64,10 +67,10 @@ class _IndexState extends State<Index> {
                   onChanged: (mail) => email = mail,
                  decoration: InputDecoration( 
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
+                          borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
                           borderRadius: BorderRadius.circular(30)),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
+                            borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
                             borderRadius: BorderRadius.circular(30),
                           ),
                       labelText: 'email',
@@ -80,10 +83,15 @@ class _IndexState extends State<Index> {
                   obscureText: true,
                   decoration: InputDecoration( 
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
+                          borderSide: BorderSide(color: HexColor("DCE313"),width: 2.0),
                           borderRadius: BorderRadius.circular(30)),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.pink[200],width: 2.0),
+                            borderSide: BorderSide(
+                            color: HexColor("DCE313"),
+                            width: 2.0,
+                            
+                            
+                            ),
                             borderRadius: BorderRadius.circular(30),
                           ),
                       labelText: 'password',
@@ -207,7 +215,7 @@ class _IndexState extends State<Index> {
             borderRadius: BorderRadius.circular(30), 
             color: Colors.pink[900],
             gradient: new LinearGradient(
-              colors: [Colors.orange[600],Colors.purple[700]],
+              colors: [Colors.purple[700],Colors.orange[600]],
               begin: Alignment.centerRight,
               end: Alignment.centerLeft
               )
@@ -264,8 +272,11 @@ class _IndexState extends State<Index> {
     on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        EasyLoading.showInfo("No user found for that email.");
+
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+        EasyLoading.showInfo("Wrong password.");
         } 
       }
       catch(error){

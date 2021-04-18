@@ -7,12 +7,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:hexcolor/hexcolor.dart';
 
+int hp_comp = 0;
+bool greater = true;
+bool less = true;
 
 class ViewData extends StatefulWidget {
   final String status;
   const ViewData({Key key, this.status}) : super(key: key);
-  
+
   @override
   _ViewDataState createState() => _ViewDataState();
 }
@@ -20,12 +24,11 @@ class ViewData extends StatefulWidget {
 class _ViewDataState extends State<ViewData> {
   String type;
   String name;
-  int hp;
-  String doc_num;
-  
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String hp;
 
- 
+  String doc_num;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -34,16 +37,19 @@ class _ViewDataState extends State<ViewData> {
   }
 
   @override //+
- 
+
   Widget build(BuildContext context) {
-     final CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
+    //print(greater);
+    //print(less);
+    //print(hp_comp);
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
     return Container(
-      decoration: new BoxDecoration(color: Colors.pink[100]),
+      decoration: new BoxDecoration(color: HexColor("0f156d")),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-         /* Center(
+          /* Center(
             child: StreamBuilder<User>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snap) {
@@ -62,23 +68,31 @@ class _ViewDataState extends State<ViewData> {
             padding: EdgeInsets.all(12),
             child: Column(
               // padding: const EdgeInsets.all(8),
-              
-             children: [
-               TextField(
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (doc) => doc_num = doc,
+
+              children: [
+                TextField(
+                  style: TextStyle(color: Colors.white),
+                  onChanged: (hp_t) => hp = hp_t,
                   obscureText: false,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: HexColor("DCE313"), width: 2.0),
+                          borderRadius: BorderRadius.circular(30)),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: HexColor("DCE313"), width: 2.0),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      labelText: 'Document ID',
-                      labelStyle: TextStyle(color: Colors.black)),
+                      labelText: 'HP',
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
                 Text(""),
                 Center(
                   //height: 100, // constrain height
-                  child: RealtimeCollection(users: users,),
+                  child: RealtimeCollection(
+                    users: users,
+                  ),
                 ),
                 /*
                 TextField(
@@ -128,7 +142,6 @@ class _ViewDataState extends State<ViewData> {
                 ),
                  Text(""),
                 */
-
               ],
             ),
           ),
@@ -139,7 +152,7 @@ class _ViewDataState extends State<ViewData> {
               children: [
                 Column(
                   children: [
-                   /* Text(
+                    /* Text(
                       "Forgot Password",
                       style: TextStyle(color: Colors.black),
                     )*/
@@ -148,20 +161,23 @@ class _ViewDataState extends State<ViewData> {
               ],
             ),
           ),
-           Column(mainAxisSize: MainAxisSize.min,
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: <Widget>[
-            // buildButtonSignIn(),
-            
-            // buildButtonCreate(),
-             buildButtonRefresh(),
-             buildButtonBack(),
-             //buildButtonCreateData(),
-             //buildButtonUpdateData(),
-             //buildButtonSignOut(),
-           ],
-           )
-           /* Row(
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // buildButtonSignIn(),
+
+              // buildButtonCreate(),
+              buildButtonGreaterThan(),
+              buildButtonLessThan(),
+              buildButtonRefresh(),
+              buildButtonBack(),
+              //buildButtonCreateData(),
+              //buildButtonUpdateData(),
+              //buildButtonSignOut(),
+            ],
+          )
+          /* Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
@@ -185,9 +201,8 @@ class _ViewDataState extends State<ViewData> {
     await FirebaseAuth.instance.signOut();
     EasyLoading.showSuccess("Sign-Out Complete");
     Route route = MaterialPageRoute(
-          builder: (context) =>
-              MaterialApp(home: Scaffold(body: Index())));
-      Navigator.push(context, route);
+        builder: (context) => MaterialApp(home: Scaffold(body: Index())));
+    Navigator.push(context, route);
   }
 /*
   Container buildButtonSignIn() {
@@ -209,29 +224,27 @@ class _ViewDataState extends State<ViewData> {
 
   Container buildButtonSignOut() {
     return Container(
-        constraints: BoxConstraints.expand(width: 300,height: 50),
+        constraints: BoxConstraints.expand(width: 300, height: 50),
         child: InkWell(
-        child: Text("Sign Out",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.white)),
-            onTap: (){
-              onClickSignOut();
-            },
-    ),
+          child: Text("Sign Out",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, color: Colors.white)),
+          onTap: () {
+            onClickSignOut();
+          },
+        ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), 
+            borderRadius: BorderRadius.circular(30),
             color: Colors.pink[900],
             gradient: new LinearGradient(
-              colors: [Colors.red,Colors.cyan],
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft
-              )
-            ),
+                colors: [Colors.red, Colors.cyan],
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft)),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
 
- /* Container buildButtonCreate() {
+  /* Container buildButtonCreate() {
     return Container(
         constraints: BoxConstraints.expand(width: 300,height: 50),
         child: InkWell(
@@ -248,17 +261,17 @@ class _ViewDataState extends State<ViewData> {
         padding: EdgeInsets.all(12));
   }
 */
-   Container buildButtonCreateData() {
+  Container buildButtonCreateData() {
     return Container(
-        constraints: BoxConstraints.expand(width: 300,height: 50),
+        constraints: BoxConstraints.expand(width: 300, height: 50),
         child: InkWell(
-        child: Text("Create Data",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.white)),
-            onTap: ()  {
-             createData();
-            },
-    ),
+          child: Text("Create Data",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, color: Colors.white)),
+          onTap: () {
+            createData();
+          },
+        ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
         margin: EdgeInsets.only(top: 16),
@@ -267,22 +280,22 @@ class _ViewDataState extends State<ViewData> {
 
   Container buildButtonUpdateData() {
     return Container(
-        constraints: BoxConstraints.expand(width: 300,height: 50),
+        constraints: BoxConstraints.expand(width: 300, height: 50),
         child: InkWell(
-        child: Text("Update",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.white)),
-            onTap: ()  {
-             UpdateData();
-            },
-    ),
+          child: Text("Update",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, color: Colors.white)),
+          onTap: () {
+            UpdateData();
+          },
+        ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30), color: Colors.pink[900]),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
 
- /* Future onClickSignIn() async {
+  /* Future onClickSignIn() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: "$email", password: "$password");     
@@ -318,88 +331,145 @@ class _ViewDataState extends State<ViewData> {
   }*/
 
   void createData() {
-    final CollectionReference users = FirebaseFirestore.instance.collection('users');
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
     users
-        
-        .add({'name': '$name', 'type': '$type' , 'hp': '$hp' })
+        .add({'name': '$name', 'type': '$type', 'hp': '$hp'})
         .then((value) => print('success'))
         .catchError((e) => print(e));
   }
 
   void UpdateData() {
-
     final CollectionReference users =
-              FirebaseFirestore.instance.collection('users');
-          users
-            .doc("$doc_num")
-              .update({'hp': '$hp' , 'name': '$name', 'type': '$type'})
-              .then((value) => print('updated!'))
-              .catchError((e) => print('update error'));
+        FirebaseFirestore.instance.collection('users');
+    users
+        .doc("$doc_num")
+        .update({'hp': '$hp', 'name': '$name', 'type': '$type'})
+        .then((value) => print('updated!'))
+        .catchError((e) => print('update error'));
   }
-
 
   Container buildButtonBack() {
     return Container(
-        constraints: BoxConstraints.expand(width: 300,height: 50),
+        constraints: BoxConstraints.expand(width: 300, height: 50),
         child: InkWell(
-        child: Text("Back",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.white)),
-            onTap: (){
-              goBack();
-            },
-    ),
+          child: Text("Back",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, color: Colors.white)),
+          onTap: () {
+            goBack();
+          },
+        ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             color: Colors.pink[900],
             gradient: new LinearGradient(
-              colors: [Colors.red,Colors.cyan],
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft
-              )
-            ),
+                colors: [Colors.purple[700], Colors.orange[600]],
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft)),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
-  
-  void goBack(){
-    Route route = MaterialPageRoute(
-          builder: (context) =>
-              MaterialApp(home: Scaffold(body: Data())));
-      Navigator.push(context, route);
 
+  void goBack() {
+    Route route = MaterialPageRoute(
+        builder: (context) => MaterialApp(home: Scaffold(body: Data())));
+    Navigator.push(context, route);
   }
 
   Container buildButtonRefresh() {
     return Container(
-        constraints: BoxConstraints.expand(width: 300,height: 50),
+        constraints: BoxConstraints.expand(width: 300, height: 50),
         child: InkWell(
-        child: Text("Refresh",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.white)),
-            onTap: (){
-              refresh();
-            },
-    ),
+          child: Text("Refresh",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, color: Colors.white)),
+          onTap: () {
+            refresh();
+          },
+        ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), 
+            borderRadius: BorderRadius.circular(30),
             color: Colors.pink[900],
             gradient: new LinearGradient(
-              colors: [Colors.cyan,Colors.red],
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft
-              )
-            ),
+                colors: [Colors.purple[700], Colors.orange[600]],
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft)),
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.all(12));
   }
-  
-  void refresh(){
-    Route route = MaterialPageRoute(
-          builder: (context) =>
-              MaterialApp(home: Scaffold(body: ViewData())));
-      Navigator.push(context, route);
 
+  void refresh() {
+    greater = true;
+    less = true;
+
+    Route route = MaterialPageRoute(
+        builder: (context) => MaterialApp(home: Scaffold(body: ViewData())));
+    Navigator.push(context, route);
+  }
+
+  Container buildButtonGreaterThan() {
+    return Container(
+        constraints: BoxConstraints.expand(width: 300, height: 50),
+        child: InkWell(
+          child: Text("Greater Than",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, color: Colors.white)),
+          onTap: () {
+            comp_great();
+          },
+        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+                colors: [Colors.purple[700], Colors.orange[600]],
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft)),
+        margin: EdgeInsets.only(top: 16),
+        padding: EdgeInsets.all(12));
+  }
+
+  void comp_great() {
+    greater = true;
+    less = false;
+    hp_comp = int.parse('$hp');
+
+    Route route = MaterialPageRoute(
+        builder: (context) => MaterialApp(home: Scaffold(body: ViewData())));
+    Navigator.push(context, route);
+  }
+
+   Container buildButtonLessThan() {
+    return Container(
+        constraints: BoxConstraints.expand(width: 300, height: 50),
+        child: InkWell(
+          child: Text("Less Than",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, color: Colors.white)),
+          onTap: () {
+            comp_less();
+          },
+        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.pink[900],
+            gradient: new LinearGradient(
+                colors: [Colors.purple[700], Colors.orange[600]],
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft)),
+        margin: EdgeInsets.only(top: 16),
+        padding: EdgeInsets.all(12));
+  }
+
+  void comp_less() {
+    greater = false;
+    less = true;
+    hp_comp = int.parse('$hp');
+
+    Route route = MaterialPageRoute(
+        builder: (context) => MaterialApp(home: Scaffold(body: ViewData())));
+    Navigator.push(context, route);
   }
 
   
@@ -415,28 +485,70 @@ class RealtimeCollection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: users
-            .where('hp', isGreaterThan: 1000)
-            .orderBy('hp', descending: false)
-            .snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
-          if (snap.hasError != false) {
-            return Text('error');
-          }
+    if ((greater == true) && (less == false)) {
+      return StreamBuilder(
+          stream: users
+              .where('hp', isGreaterThan: hp_comp)
+              .orderBy('hp', descending: false)
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
+            if (snap.hasError != false) {
+              return Text('error');
+            }
 
-          if (snap.connectionState == ConnectionState.waiting) {
-            return Text('loading....');
-          }
-          return ListView(
-            shrinkWrap: true,
-            
-            children: snap.data.docs.map((doc) {
-              print(doc.data().toString());
-              return Text(doc.data().toString());
-            }).toList(),
-          );
-        });
+            if (snap.connectionState == ConnectionState.waiting) {
+              return Text('loading....');
+            }
+            return ListView(
+              shrinkWrap: true,
+              children: snap.data.docs.map((doc) {
+                print(doc.data().toString());
+                return Text(doc.data().toString(),style: TextStyle(color: Colors.white),);
+              }).toList(),
+            );
+          });
+    } else if ((greater == false) && (less == true)) {
+      return StreamBuilder(
+          stream: users
+              .where('hp', isLessThan: hp_comp)
+              .orderBy('hp', descending: false)
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
+            if (snap.hasError != false) {
+              return Text('error');
+            }
+
+            if (snap.connectionState == ConnectionState.waiting) {
+              return Text('loading....');
+            }
+            return ListView(
+              shrinkWrap: true,
+              children: snap.data.docs.map((doc) {
+                print(doc.data().toString());
+                return Text(doc.data().toString(),style: TextStyle(color: Colors.white),);
+              }).toList(),
+            );
+          });
+    } else if ((greater == true) && (less == true)) {
+      return StreamBuilder(
+          stream: users.orderBy('hp', descending: false).snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
+            if (snap.hasError != false) {
+              return Text('error');
+            }
+
+            if (snap.connectionState == ConnectionState.waiting) {
+              return Text('loading....');
+            }
+            return ListView(
+              shrinkWrap: true,
+              children: snap.data.docs.map((doc) {
+                print(doc.data().toString());
+                return Text(doc.data().toString(),style: TextStyle(color: Colors.white),);
+              }).toList(),
+            );
+          });
+    }
   }
 }
 
